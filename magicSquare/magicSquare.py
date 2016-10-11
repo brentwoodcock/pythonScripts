@@ -1,17 +1,17 @@
-# Populate a 2-D list with numbers from 1 to n2
-def makeSquare ( n ):
-	# empty 2-D list filled with 0's
-	empty_square = [];
-	empty_row = [];
+# Populate a 2-D list with 0's in n**2 positions
+def makeEmptySquare ( n ):
+	square = [];
+	row = [];
 	for i in range (0, n):
 		for j in range (0, n):
-			empty_row.append(0);
-		empty_square.append(empty_row);
-		empty_row = [];
-	return empty_square;
+			row.append(0);
+		square.append(row);
+		row = [];
+	return square;
 
-
-	square = [];
+# Populate a 2-D list with numbers from 1 to n2
+def makeSquare ( n ):
+	square = makeEmptySquare(n);
 	new_row = [];
 	# Cycle through all numbers from 1 to n**2
 	for i in range(0, n**2):
