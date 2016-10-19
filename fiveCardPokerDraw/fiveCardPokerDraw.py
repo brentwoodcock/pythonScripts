@@ -77,10 +77,98 @@ class Poker (object):
         hand.append (self.deck.deal())
       self.players.append (hand)
 
+  def play (self):
+    #  Sort the hands of each player
+    for i in range (len(self.players)):
+      sortedHand = sorted (self.players[i], reverse = True)
+      self.players[i] = sortedHand
+      hand = ''
+      for card in sortedHand:
+        hand = hand + str (card) + ' '
+      print ('Player ' + str (i + 1) + ' : ' + hand)
+
+    # determine each type of hand and print
+    points_hand = []
+
+    # determine winner and print
 
 
+  def is_royal (self, hand):
+    same_suit = True
+    for i in range (len(hand) - 1):
+      same_suit = same_suit and (hand[i].suit == hand[i + 1].suit)
+    if (not same_suit):
+      return False
 
+    rank_order = True
+    for i in range (len(hand)):
+      rank_order = rank_order and (hand[i].rank == 14 - i)
 
+    return (same_suit and rank_order)
+    
+  def is_straight_flush (self, hand):
+    for i in range (len(hand) - 4):
+      if (hand[i].rank == hand[i + 1].rank + 1) and (hand[i].rank == hand[i + 2].rank + 2) and (hand[i].suit == hand[i + 1].suit) and (hand[i].suit == hand[i + 2].suit):
+        if (hand[i].rank == hand[i + 3].rank + 3) and (hand[i].rank == hand[i + 4].rank + 4) and (hand[i].suit == hand[i + 3].suit) and (hand[i].suit == hand[i + 4].suit):
+          return True
+    return False
+
+  def is_four_kind (self, hand):
+    for i in range (len(hand) - 3):
+      if (hand[i].suit == hand[i + 1].suit) and (hand[i] == hand[i + 2]):
+        if (hand[i].suit == hand[i + 3].suit) and (hand[i] == hand[i + 4]):
+          return True
+    return False
+
+  def is_full_house (self, hand):
+    for i in range (len(hand) - 4):
+      if (hand[i].rank == hand[i + 1].rank) and (hand[i].rank == hand[i + 2].rank):
+        if (hand[i + 3].rank == hand[i + 4].rank):
+          return True
+      if (hand[i].rank == hand[i + 1].rank):
+        if (hand[i + 2].rank == hand[i + 3].rank) and (hand[i + 2].rank == hand[i + 4].rank):
+          return True
+    return False
+
+  def is_flush (self, hand):
+    for i in range (len(hand) - 4):
+      if (hand[i].suit == hand[i + 1].suit) and (hand[i].suit == hand[i + 2].suit):
+        if (hand[i].suit == hand[i + 3].suit) and (hand[i].suit == hand[i + 4].suit):
+          return True
+    return False
+
+  def is_straight (self, hand):
+    for i in range (len(hand) - 4):
+      if (hand[i].rank == hand[i + 1].rank + 1) and (hand[i].rank == hand[i + 2].rank + 2):
+        if (hand[i].rank == hand[i + 3].rank + 3) and (hand[i].rank == hand[i + 4].rank + 4):
+          return True
+    return False
+
+  def is_three_kind (self, hand):
+    for i in range (len(hand) - 2):
+      if (hand[i].rank == hand[i + 1].rank) and (hand[i].rank == hand[i + 2].rank):
+        return True
+    return False
+
+  def is_two_pair (self, hand):
+    for i in range (len(hand) - 3):
+      if (hand[i].rank == hand[i + 1].rank) and (hand[i + 2].rank == hand[i + 3].rank):
+        return True
+    return False
+
+  # determine if a hand is one pair
+  def is_one_pair (self, hand):
+    for i in range (len(hand) - 1):
+      if (hand[i].rank == hand[i + 1].rank):
+        return True
+    return False
+
+  # determine if a hand is high card
+  def is_high_card (self, hand):
+    for i in range (len(hand) - 1):
+      if (hand[i].rank == hand[i + 1].rank):
+        return False
+    return True
 
 def main():
   #  Prompt user to enter the nuimber of players
